@@ -1,40 +1,61 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link>
+    <router-link to="/">Главная</router-link>
     |
-    <router-link to="/about">About</router-link>
+    <router-link to="/books">Книги</router-link>
+    |
+    <router-link to="/authors">Авторы</router-link>
   </nav>
-  <router-view/>
-  <p>{{ books }}</p>
+  <hr>
+  <main>
+    <router-view/>
+  </main>
 </template>
 
-<script>
-
-export default {
-  name: "App",
-
-  data() {
-    return {
-      books: []
-    }
-  },
-
-  mounted() {
-    fetch('http://127.0.0.1:8000/api/books/')
-        .then(response => response.json())
-        .then(json => {
-          this.books = json
-        })
-  }
-}
-
-</script>
-
 <style>
-#app {
+
+html {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  margin-right: 30%;
+  margin-left: 30%;
+}
+
+.content-item {
+  text-align: left;
+}
+
+.content-item .title {
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid #2c3e50;
+  border-radius: 5px;
+}
+
+.content-item .body {
+  border: 1px solid #2c3e50;
+  border-top: None;
+  padding: 5px;
+  display: flex;
+  margin: 0 5px 5px;
+}
+
+.content-item .body .info{
+  margin-left: 5px;
+  overflow: hidden;
+  margin-right: auto;
+  text-align: justify;
+}
+
+
+#app {
   text-align: center;
   color: #2c3e50;
 }
