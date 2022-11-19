@@ -1,16 +1,24 @@
 <!-- eslint-disable -->
 <template>
-  <div>
-    <p>{{ book.title }}</p>
-    <p> Автор: {{ author.name }} {{ author.surname }} </p>
-    <text>{{ book.description }}</text>
-    <p>Год написания: {{ book.year_of_writing }}</p>
+  <div class="detail-view">
+    <p class="title">{{ book.title }}</p>
+    <img v-if="book.cover" :src="book.cover">
+
+    <div class="section-title"> Автор:
+      <router-link :to="{name: 'author-detail', params: {id: String(author.id)}}">
+        {{ author.name }} {{ author.surname }}
+      </router-link>
+    </div>
+
+    <p class="section-title">Описание:</p>
+    <div class="description">{{ book.description }}</div>
+    <p class="section-title">Год написания: {{ book.year_of_writing }}</p>
     <a :href="book.file">Читать</a>
   </div>
 </template>
 
 <script>
-import Api from "@/api";
+import {mapActions} from "vuex";
 
 export default {
   name: "Books-Detail",
@@ -18,24 +26,36 @@ export default {
     id: {
       type: String,
       required: true
-    }
+    },
   },
+
   data() {
     return {
       book: {},
       author: {},
     }
   },
-  mounted() {
-    Api.booksGetRequest(this.id).then((response) => {
-      this.book = response.data
-
-      Api.authorsGetRequest(this.book.author).then((response) => {
-        this.author = response.data
-        console.log(this.author)
-      })
-    })
-
+  methods: mapActions(['fetchAuthors', 'fetchBooks']),
+  async mounted() {
+    // await this.fetchBook(this.id)
+    // await this.fetchAuthor(this.book.author)
+    await this.fetchAuthors()
+    await this.fetchBooks()
+    this.book = this.$store.getters.getBookById(this.id)
+    this.author = this.$store.getters.getAuthorById(this.book.author)
+    console.log(this.author)
+    console.log(this.book)
   }
+  // data() {
+  //   return {
+  //     book: {},
+  //     author: {},
+  //   }
+  // },
+  // async mounted() {
+  //
+  //   this.book = this.$store.getters.getBookById(this.id)
+  //   this.author = this.$store.getters.getAuthorById(this.book.author)
+  // }
 }
 </script>

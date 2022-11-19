@@ -1,22 +1,24 @@
 <!-- eslint-disable -->
 <template>
-  <div>
+  <div class="detail-view">
+
     <p class="title">{{ author.name }} {{ author.surname }}</p>
-    <img :src="author.image">
-    <text>{{ author.description }}</text>
-    <p>Книги</p>
+    <img v-if="author.image" :src="author.image">
+    <p class="section-title">Описание:</p>
+    <div class="description">{{ author.description }}</div>
+    <p class="section-title">Книги:</p>
     <ul>
       <li v-for="book in books">
-        <router-link :to="{name: 'books-detail', params: {
-          id: book.id
-        }}">{{ book.title }}</router-link>
+        <router-link :to="{name: 'books-detail', params: {id: book.id}}">
+          {{ book.title }}
+        </router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Api from "@/api";
+import LibraryApi from "@/api/library_api";
 
 export default {
   name: "Author-Detail",
@@ -24,7 +26,7 @@ export default {
 
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -35,17 +37,14 @@ export default {
     }
   },
   mounted() {
-    Api.authorBooksGetRequest(this.id).then((response) => {
+    LibraryApi.authorBooksGetRequest(this.id).then((response) => {
       this.books = response.data
     })
 
-    Api.authorsGetRequest(this.id).then((response) => {
+    LibraryApi.authorsGetRequest(this.id).then((response) => {
       this.author = response.data
     })
   }
 }
 </script>
 
-<style scoped>
-
-</style>

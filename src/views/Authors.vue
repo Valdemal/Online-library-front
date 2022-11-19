@@ -12,7 +12,7 @@
 <script>
 /* eslint-disable */
 
-import Api from "@/api";
+import LibraryApi from "@/api/library_api";
 import AuthorsItem from "@/components/Authors-Item";
 import Loader from "@/components/Loader";
 
@@ -26,15 +26,13 @@ export default {
     }
   },
   mounted() {
-    Api.authorsGetRequest()
-        .then((response) => {
-          this.authors = response.data
-        })
-        .catch(() => {
-          console.error('Авторы не получены')
-        })
-
-    this.is_loading = false
+    LibraryApi.authorsGetRequest().then((response) => {
+      this.authors = response.data
+    }).catch(() => {
+      console.error('Авторы не получены')
+    }).finally(() => {
+      this.is_loading = false
+    })
   }
 }
 </script>

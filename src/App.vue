@@ -25,6 +25,40 @@ main {
   margin-left: 30%;
 }
 
+
+.detail-view {
+  border: solid 1px;
+  border-radius: 2px;
+  padding: 1%;
+  text-align: left;
+}
+
+.detail-view .title {
+  text-align: center;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.detail-view img {
+  width: 100%;
+  border-radius: 2px;
+}
+
+.detail-view .section-title {
+  text-align: left;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.detail-view ul li {
+  text-align: left;
+}
+
+.detail-view .description {
+  width: 100%;
+  text-align: justify;
+}
+
 .content-item {
   text-align: left;
 }
@@ -37,6 +71,9 @@ main {
   padding-bottom: 5px;
   border: 1px solid #2c3e50;
   border-radius: 5px;
+}
+a {
+  color: #2c3e50;
 }
 
 .content-item .body {
@@ -52,6 +89,10 @@ main {
   overflow: hidden;
   margin-right: auto;
   text-align: justify;
+}
+
+.content-item .body img {
+  width: 40%;
 }
 
 

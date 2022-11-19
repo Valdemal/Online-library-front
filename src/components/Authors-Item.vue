@@ -1,13 +1,12 @@
 <template>
   <div class="content-item">
-    <p class="title">{{ author.name }} {{ author.surname }}</p>
+    <router-link :to="{name: 'author-detail', params: {id: author.id,}}">
+      <p class="title">{{ author.name }} {{ author.surname }}</p>
+    </router-link>
     <div class="body">
-      <img :src="author.image" width="200">
+      <img v-if="author.image" :src="author.image">
       <div class="info">
         <text>{{ author.description }}</text>
-        <router-link :to="{name: 'author-detail', params: {
-          id: author.id,
-        }}">Подробнее</router-link>
       </div>
     </div>
   </div>
