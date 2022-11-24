@@ -1,8 +1,8 @@
-import { createStore } from 'vuex'
-import library from "@/store/modules/library";
+import {createStore} from "vuex";
+import {AuthModule} from "@/store/modules/auth"
 
 export default createStore({
-  modules: {
-    library,
-  }
+    modules: {
+        AuthModule
+    }
 })

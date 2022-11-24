@@ -1,15 +1,14 @@
 import axios from "axios";
-
-const SERVER_DOMAIN = 'http://127.0.0.1:8000/api/';
+import {SERVER_API_URL} from './config'
 
 function getBooksUrl(id = undefined) {
     let postfix = id !== undefined ? `${id}/` : ''
-    return SERVER_DOMAIN + 'books/' + postfix
+    return SERVER_API_URL + 'books/' + postfix
 }
 
 function getAuthorsUrl(id = undefined) {
     let postfix = id !== undefined ? `${id}/` : ''
-    return SERVER_DOMAIN + 'authors/' + postfix
+    return SERVER_API_URL + 'authors/' + postfix
 }
 
 const instance = axios.create({

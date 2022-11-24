@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
-  <div v-if="allBooks.length">
-    <BookItem v-for="book in allBooks" :book="book"/>
+  <div v-if="books.length">
+    <BookItem v-for="book in books" :book="book"/>
   </div>
   <Loader v-else-if="is_loading"/>
   <p v-else>Ошибка сервера! Приносим извинения.</p>
@@ -12,7 +12,7 @@
 /* eslint-disable */
 import BookItem from "@/components/Books-Item";
 import Loader from "@/components/Loader";
-import {mapActions, mapGetters} from "vuex";
+import LibraryAPI from "@/api/library_api"
 
 export default {
   name: "App",
@@ -22,14 +22,19 @@ export default {
 
   data() {
     return {
-      is_loading: true
+      is_loading: true,
+      books: []
     }
   },
 
-  computed: mapGetters(["allBooks"]),
-  methods: mapActions(['fetchBooks']),
   async mounted() {
-      await this.fetchBooks()
+    LibraryAPI.booksGetRequest().then((response) => {
+      this.books = response.data
+    }).catch(() => {
+      console.log("Ошибка получения книг!")
+    }).finally(() => {
+      this.is_loading = false
+    })
   },
 }
 

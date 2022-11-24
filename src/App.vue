@@ -1,10 +1,19 @@
 <template>
   <nav>
-    <router-link to="/">Главная</router-link>
-    |
-    <router-link to="/books">Книги</router-link>
-    |
-    <router-link to="/authors">Авторы</router-link>
+
+    <AuthLinks class="nav-item"></AuthLinks>
+
+    <div class="nav-item">
+      <router-link to="/">Главная</router-link>
+      |
+      <router-link to="/books">Книги</router-link>
+      |
+      <router-link to="/authors">Авторы</router-link>
+    </div>
+
+    <div class="nav-item" style="visibility: hidden">
+      Болванка
+    </div>
   </nav>
   <hr>
   <main>
@@ -13,6 +22,31 @@
 </template>
 
 <style>
+
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.nav-item {
+  width: 30%;
+}
+
+nav {
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+
+.library-links {
+  align-self: center;
+}
 
 html {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -101,16 +135,10 @@ a {
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
+<script>
+import AuthLinks from "@/components/Auth-Links";
+export default {
+  components: {AuthLinks}
+}
+</script>

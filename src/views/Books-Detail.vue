@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import LibraryApi from "@/api/library_api"
 
 export default {
   name: "Books-Detail",
@@ -35,27 +35,19 @@ export default {
       author: {},
     }
   },
-  methods: mapActions(['fetchAuthors', 'fetchBooks']),
+
   async mounted() {
-    // await this.fetchBook(this.id)
-    // await this.fetchAuthor(this.book.author)
-    await this.fetchAuthors()
-    await this.fetchBooks()
-    this.book = this.$store.getters.getBookById(this.id)
-    this.author = this.$store.getters.getAuthorById(this.book.author)
-    console.log(this.author)
-    console.log(this.book)
+    LibraryApi.booksGetRequest(this.id).then((response) => {
+      this.book = response.data
+
+      LibraryApi.authorsGetRequest(this.book.author).then((response) => {
+        this.author = response.data
+      }).catch(() => {
+        console.log("Ошибка получения автора!")
+      })
+    }).catch(() => {
+      console.log("Ошибка получения автора!")
+    })
   }
-  // data() {
-  //   return {
-  //     book: {},
-  //     author: {},
-  //   }
-  // },
-  // async mounted() {
-  //
-  //   this.book = this.$store.getters.getBookById(this.id)
-  //   this.author = this.$store.getters.getAuthorById(this.book.author)
-  // }
 }
 </script>
