@@ -2,7 +2,7 @@ import {SERVER_DOMAIN_URL} from "@/api/config";
 import axios from "axios";
 
 const TOKEN_API_URL = SERVER_DOMAIN_URL + 'auth/token/'
-const USERS_API_URL = SERVER_DOMAIN_URL + 'api/auth/users'
+const USERS_API_URL = SERVER_DOMAIN_URL + 'api/auth/users/'
 
 const loginConfig = {
     headers: {
@@ -36,7 +36,7 @@ export default {
     },
 
     fetchUser() {
-        return DefaultAPIInstance.post(USERS_API_URL + 'me/')
+        return DefaultAPIInstance.get(USERS_API_URL + 'me/')
     },
 
     // Возможно это делается через интерсепторы

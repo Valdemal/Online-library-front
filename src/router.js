@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+// eslint-disable-next-line
 const isAuthorized = localStorage.hasOwnProperty('token')
 
-// const isAuthorizedGuard = function (to, from, next) {
-//   if (!isAuthorized) next({name: 'login'})
-//   else next()
-// }
+const isAuthorizedGuard = function (to, from, next) {
+  if (!isAuthorized) next({name: 'login'})
+  else next()
+}
 
 const isNotAuthorizedGuard = function (to, from, next) {
   if (isAuthorized) next({name: 'main'})
@@ -15,35 +16,55 @@ const isNotAuthorizedGuard = function (to, from, next) {
 const routes = [
   {
     path: '/',
-    name: 'main',
-    component: () => import('@/views/Main-View')
-  }, {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/Login-View'),
-    beforeEnter: isNotAuthorizedGuard,
-  }, {
-    path: '/registration',
-    name: 'registration',
-    component: () => import('@/views/Registration-View')
+    component: () => import('@/views/Main/Layout'),
+    children: [
+      {
+        path: '',
+        name: 'main',
+        component: () => import('@/views/Main/Main-View')
+      },
+      {
+        path: '/books',
+        name: 'books',
+        component: () => import('@/views/Main/Books')
+      }, {
+        path: '/authors',
+        name: 'authors',
+        component: () => import('@/views/Main/Authors')
+      }, {
+        path: '/authors/:id/',
+        name: 'author-detail',
+        props: true,
+        component: () => import('@/views/Main/Authors-Detail')
+      }, {
+        path: '/books/:id/',
+        name: 'books-detail',
+        props: true,
+        component: () => import('@/views/Main/Books-Detail')
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/Main/Login-View'),
+        beforeEnter: isNotAuthorizedGuard,
+      }, {
+        path: '/registration',
+        name: 'registration',
+        component: () => import('@/views/Main/Registration-View'),
+        beforeEnter: isNotAuthorizedGuard,
+      },
+    ]
   },{
-    path: '/books',
-    name: 'books',
-    component: () => import('@/views/Books')
-  }, {
-    path: '/authors',
-    name: 'authors',
-    component: () => import('@/views/Authors')
-  }, {
-    path: '/authors/:id/',
-    name: 'author-detail',
-    props: true,
-    component: () => import('@/views/Authors-Detail')
-  }, {
-    path: '/books/:id/',
-    name: 'books-detail',
-    props: true,
-    component: () => import('@/views/Books-Detail')
+    path: '/user',
+    component: () => import('@/views/User/Layout'),
+    beforeEnter: isAuthorizedGuard,
+    children: [
+      {
+        path: '',
+        name: 'me',
+        component: () => import('@/views/User/Main-View')
+      }
+    ]
   }
 ]
 

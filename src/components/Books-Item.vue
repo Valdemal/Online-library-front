@@ -1,4 +1,3 @@
-
 <template>
   <div class="content-item">
     <router-link :to="{name: 'books-detail', params: {id: book.id}}">
@@ -8,9 +7,9 @@
       <img :src="coverSrc">
       <div class="info">
         <p>Автор:
-        <router-link :to="{name: 'author-detail', params: {id: book.author}}">
-          {{ author.name }} {{ author.surname }}
-        </router-link>
+          <router-link :to="{name: 'author-detail', params: {id: book.author}}">
+            {{ author.name }} {{ author.surname }}
+          </router-link>
         </p>
         <text>{{ book.description }}</text>
         <p>Год написания: {{ book.year_of_writing }}</p>
@@ -25,6 +24,8 @@
 
 import LibraryApi from "@/api/library_api";
 
+const cover_placeholder_href = new URL("@/assets/images/cover_placeholder.jpg", import.meta.url).href
+
 export default {
   name: "Book-Item",
   props: {
@@ -33,28 +34,23 @@ export default {
       required: true,
     },
   },
-  data(){
+  data() {
     return {
       author: ''
     }
   },
   computed: {
-    coverSrc(){
-      if (this.book.cover)
-        return this.book.cover
-      else
-        return process.env.BASE_URL + "images/cover_placeholder.jpg"
+    coverSrc() {
+      return this.book.cover ? this.book.cover : cover_placeholder_href
     }
   },
 
   mounted() {
-    LibraryApi.authorsGetRequest(this.book.author)
-        .then((response) => {
-          this.author = response.data
-        })
-        .catch(() => {
-          console.log(`Ошибка получения автора ${this.book.title}`)
-        })
+    LibraryApi.authorsGetRequest(this.book.author).then((response) => {
+      this.author = response.data
+    }).catch(() => {
+      console.log(`Ошибка получения автора ${this.book.title}`)
+    })
   }
 }
 

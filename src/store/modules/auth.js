@@ -58,6 +58,7 @@ export const AuthModule = {
 
         onFetchUser({commit}) {
             return API.fetchUser().then((response) => {
+                console.log(response.data)
                 commit('setUser', response.data)
             })
         }

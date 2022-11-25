@@ -1,24 +1,5 @@
 <template>
-  <nav>
-
-    <AuthLinks class="nav-item"></AuthLinks>
-
-    <div class="nav-item">
-      <router-link to="/">Главная</router-link>
-      |
-      <router-link to="/books">Книги</router-link>
-      |
-      <router-link to="/authors">Авторы</router-link>
-    </div>
-
-    <div class="nav-item" style="visibility: hidden">
-      Болванка
-    </div>
-  </nav>
-  <hr>
-  <main>
-    <router-view/>
-  </main>
+  <router-view></router-view>
 </template>
 
 <style>
@@ -34,9 +15,11 @@ nav a {
 }
 
 nav {
-  padding: 30px;
+  padding: 10px 30px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav a.router-link-exact-active {
@@ -136,9 +119,3 @@ a {
 }
 
 </style>
-<script>
-import AuthLinks from "@/components/Auth-Links";
-export default {
-  components: {AuthLinks}
-}
-</script>
